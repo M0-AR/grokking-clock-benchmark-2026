@@ -1,0 +1,8 @@
+P: 113
+frac: 0.3
+op: add
+seed: 0
+epochs: 6000
+lr: 0.001
+wd: 1.0
+log_every: 100

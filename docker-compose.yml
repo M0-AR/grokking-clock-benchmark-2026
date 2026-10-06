@@ -1,0 +1,23 @@
+services:
+  grokking-cpu:
+    build: .
+    volumes:
+      - ./results:/work/results
+    environment:
+      - PYTHONPATH=/work
+      - CUDA_VISIBLE_DEVICES=
+    command: bash scripts/run_full.sh
+  grokking-gpu:
+    build: .
+    volumes:
+      - ./results:/work/results
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - PYTHONPATH=/work
+    command: bash scripts/run_full.sh

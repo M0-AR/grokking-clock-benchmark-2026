@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grokking the Clock — Watch a Neural Network Suddenly Understand</title>
+<meta name="description" content="A tiny hand-written transformer memorizes 3,830 clock additions, then — thousands of steps later — suddenly understands all 12,769. Rebuilt from scratch, verified live, with Fourier circles, a 3-line clock algorithm, and a live-market boundary.">
+<style>
+:root{--bg:#0b1020;--card:#141b33;--ink:#eaf0ff;--mut:#a9b4d4;--acc:#5eead4;--acc2:#fbbf24;--line:#263056}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 80% -10%,#1b2a5e 0%,var(--bg) 55%) fixed,var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+.hero{background:linear-gradient(180deg,rgba(94,234,212,.12),rgba(0,0,0,0));border:1px solid var(--line);border-radius:20px;padding:36px;text-align:center}
+.kicker{letter-spacing:.2em;text-transform:uppercase;color:var(--acc);font-size:12px}
+h1{font-size:clamp(28px,5vw,52px);margin:10px 0}
+.sub{color:var(--mut);max-width:760px;margin:0 auto}
+.badges{margin:16px 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.badges span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;background:#101736}
+.btns{margin:22px 0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{background:var(--acc);color:#06251f;border:0;border-radius:10px;padding:12px 20px;font-weight:700;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:22px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:17px}.num{font-size:30px;font-weight:800;color:var(--acc)}
+h2{margin:44px 0 8px;font-size:26px}h2 .e{margin-right:8px}
+p.lead{color:var(--mut)}.fig{background:#0e1430;border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0}
+.fig img,.fig video{width:100%;border-radius:10px;display:block}
+.cap{color:var(--mut);font-size:14px;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:14px;background:#0e1430;border-radius:12px;overflow:hidden}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--acc)}
+code,pre{background:#0a0f24;border:1px solid var(--line);border-radius:8px}code{padding:2px 6px}pre{padding:14px;overflow:auto}
+.steps{counter-reset:s}.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:10px 0}.step:before{counter-increment:s;content:"Step " counter(s);color:var(--acc2);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+footer{color:var(--mut);font-size:13px;margin-top:50px;border-top:1px solid var(--line);padding-top:16px}
+.note{border-left:4px solid var(--acc2);padding:10px 14px;background:#171307;border-radius:0 10px 10px 0}
+@media(max-width:640px){.wrap{padding:20px 12px 60px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+<div class="kicker">Small model · Big surprise · Fully reproducible</div>
+<h1>🕰️ Grokking the Clock</h1>
+<p class="sub"><b>In 30 seconds:</b> we teach a tiny neural network 3,830 clock additions. It memorizes them by step ~400 — and understands <i>nothing</i> else. We change <b>one line</b> (weight decay), keep training, and near step ~7,000 it suddenly scores <b>100% on 8,939 problems it never saw</b>. Nobody added data. Nobody changed the code mid-run. The network traded its phone book for a clock. This page shows you the whole story — and lets you rerun every number.</p>
+<div class="badges"><span>MIT license</span><span>PyTorch</span><span>Docker CPU+GPU</span><span>227k params · hand-written</span><span>P=113 · 12,769 problems</span><span>Tests pass</span></div>
+<div class="btns">
+<a class="btn" href="#try">Run it in 2 minutes</a>
+<a class="btn ghost" href="#watch">▶ Watch it grok</a>
+<a class="btn ghost" href="https://github.com/">⭐ Star the repo</a>
+</div>
+</div>
+
+<div class="grid">
+<div class="card"><div class="num">100% / ~8%</div><h3>Memorize vs understand</h3>Train accuracy hits 100% fast. Without decay, test sits near chance (~8%). With decay, it jumps to 100% — thousands of steps later.</div>
+<div class="card"><div class="num">92% in 4 waves</div><h3>It builds circles</h3>The grokked embedding is 4 sine/cosine waves. Plot any pair and 113 dots form a clock — never taught, discovered.</div>
+<div class="card"><div class="num">3 lines, 100%</div><h3>A clock with no training</h3><code>score(c) = Σ cos(wₖ(a+b−c))</code> — try every answer, pick the top. Perfect on all 12,769.</div>
+<div class="card"><div class="num">Δt ∝ 1/λ</div><h3>A law you can use</h3>Stronger weight decay → sooner grokking (λ=1→7k, λ=2→1.5k). More data helps more (50%→1.4k).</div>
+</div>
+
+<h2 id="watch"><span class="e">▶️</span>Watch: the sudden jump (real training run)</h2>
+<p class="lead">Left: accuracy over time. Right: green = problems answered correctly (starts at the 30% it saw, ends fully green). Made from the actual <code>results/grok_15k.json</code> history — not a cartoon.</p>
+<div class="fig">
+<video controls autoplay muted loop playsinline poster="assets/curve_grok_vs_mem.png" src="demo.mp4"></video>
+<div class="cap">Video: the grokking run (seed 0, 30% data, decay 1). Prefer GIF? <a href="demo.gif" style="color:#5eead4">docs/demo.gif</a> is the same animation. To add your own YouTube walkthrough: upload, then replace this &lt;video&gt; with the YouTube embed — the README shows the one-line snippet.</div>
+</div>
+<div class="fig"><img src="demo.gif" alt="Animated grokking demo"><div class="cap">GIF fallback (renders inside GitHub READMEs, where &lt;video&gt; tags are stripped).</div></div>
+
+<h2><span class="e">🌱</span>Beginner guide — read this and you are dangerous</h2>
+<p class="lead">You will know more than most interview candidates. Let's work this out in a step-by-step way to be sure we have the right answer.</p>
+<div class="step"><b>1 · The clock.</b> Our clock has 113 hours (0–112). 100+50 isn't 150 — it wraps past 113 to <b>37</b>. In Python: <code>(100+50) % 113 == 37</code>. Every pair (a,b) is one cell in a 113×113 table; color = answer. Diagonal stripes = the rule.</div>
+<div class="step"><b>2 · The hiding game.</b> We shuffle all 12,769 cells, show the net 3,830 with answers (train), hide 8,939 (test). Two ways to ace train: learn the rule, or memorize like a phone book. Test tells them apart.</div>
+<div class="step"><b>3 · Tokens, not digits.</b> The net never sees "37 comes after 36". Each number is just sticker #37, plus sticker #113 for "=". Three stickers in, one answer out of 113.</div>
+<div class="step"><b>4 · The tiny machine.</b> Look up each sticker's 128-number list → gather clues at "=" with 4 attention heads → think with 512 neurons (negative→0) → score 113 answers, pick the top. Untrained: guesses ~1/113 right.</div>
+<div class="step"><b>5 · School: guess → measure → nudge.</b> Run all 3,830 at once; turn scores into probabilities; penalty = −log(probability of right answer); PyTorch points each weight toward lower penalty; Adam steps that way. Repeat. By ~400 rounds: 100% on seen, ~8% on hidden. A phone book.</div>
+<div class="step"><b>6 · The one line: weight decay.</b> After each step, shrink every weight ×0.999. Useless weights melt to zero; needed ones get pushed back up. Now two forces: <i>get train right</i> vs <i>do it small</i>. Memorizing thousands of answers is big. A few circles is small. Same train score — smaller weights win. Test jumps to 100% near step ~7,000.</div>
+<div class="step"><b>7 · Open it up.</b> A column of the embedding table, top to bottom: memorizer = noise; grokker = smooth waves. Four wave-speeds hold 92%. Cosine+sine of one speed = a circle. Adding on a circle is just turning — wrapping costs nothing. The last table reads answers by "turn back by c; biggest cosine wins". Delete the 4 waves → 1% (blind). Keep only them → 99.7%. That's understanding, verified.</div>
+
+<h2><span class="e">📊</span>Evidence (every number runs)</h2>
+<div class="fig"><img src="assets/curve_grok_vs_mem.png" alt="train and test curves"><div class="cap">Both nets memorize fast. Only decay generalizes — late and suddenly. (results/grok_15k.json vs mem_only.json)</div></div>
+<div class="fig"><img src="assets/fourier_grok_vs_mem.png" alt="fourier shares"><div class="cap">Embedding spectra: 4 speeds dominate the grokker; the memorizer is flat noise.</div></div>
+<div class="fig"><img src="assets/circle_speed.png" alt="clock circle"><div class="cap">One cosine+sine pair → all 113 tokens in order, evenly spaced. A self-built clock face (speed 5 in seed 0; other seeds pick other speeds — always 3–5 of them).</div></div>
+<div class="fig"><img src="assets/sweep_bars.png" alt="data sweep"><div class="cap">More data → much sooner: 25%→12k, 30%→7k, 40%→4.1k, 50%→1.4k epochs to 99% test.</div></div>
+
+<table>
+<tr><th>Experiment</th><th>Setting</th><th>Result</th></tr>
+<tr><td>Chance</td><td>Untrained, 1 of 113</td><td>~0.9% test</td></tr>
+<tr><td>Memorize only</td><td>decay 0, 30%, 6k</td><td>train 100%, test 8.4%, |w|² 11,436</td></tr>
+<tr><td><b>Grok</b></td><td>decay 1, 30%, 15k, seed 0</td><td>train 100% @~400; test &gt;99% @7k, 100% after; |w|² → 928</td></tr>
+<tr><td>Fourier fit</td><td>logits ≈ Σαₖcos(wₖ(a+b−c))</td><td>93.2% variance explained (mem: 0.15%)</td></tr>
+<tr><td>Keep 4 waves</td><td>ablate rest of embedding</td><td>grok 99.7% test · mem 1.1%</td></tr>
+<tr><td>Remove 4 waves</td><td>ablate keys</td><td>grok 1.2% (blind) · mem still 73.7% train (holographic)</td></tr>
+<tr><td>Handwritten clock</td><td>no weights, 1–4 speeds</td><td>100% all 12,769 (1 speed: runner-up 0.998; 4 speeds: 4 vs 2.9)</td></tr>
+<tr><td>Decay law</td><td>λ 0.5 / 1 / 2 @30%</td><td>&gt;8k (20%) / 7k / 1.5k — Δt ∝ 1/λ</td></tr>
+<tr><td>Subtraction</td><td>asymmetric, harder</td><td>30% never (0.7%); 50% groks @2.2k</td></tr>
+<tr><td>Live market</td><td>ECB FX + BTC, same protocol</td><td>~chance (FX test 54%→46%). Grokking bounds to clean enumerable tasks.</td></tr>
+</table>
+
+<h2><span class="e">✨</span>Features — what you get</h2>
+<div class="grid">
+<div class="card"><h3>7 tiny files, zero magic</h3>task → model → train → analysis → clock → sweeps → realdata. The transformer uses raw tensors only — no ready-made layers — so you see every multiply.</div>
+<div class="card"><h3>One-command repro</h3><code>pip install -r requirements.txt</code>, <code>make verify</code>, or <code>docker compose up --build grokking-cpu</code>. JSON histories + checkpoints in <code>results/</code>.</div>
+<div class="card"><h3>Mechanistic X-ray</h3>Fourier shares, key speeds, Gini sparsity, keep/remove ablations, logit FVE fits, circle plots — the full "open the net" toolkit.</div>
+<div class="card"><h3>Benchmark harness</h3>Data-fraction, decay, seed, and operation sweeps with grok-epoch detection. Add your op in one function.</div>
+<div class="card"><h3>Honest boundaries</h3>wd=0 baseline, live-market negative control (offline-tolerant, sources labelled), limits section. Null results ship too.</div>
+<div class="card"><h3>Pages-ready site</h3>This file <i>is</i> <code>docs/preview.html</code> — publish it below and share one link.</div>
+</div>
+
+<h2><span class="e">🧑‍💻</span>User stories — what you can use this for</h2>
+<div class="card"><b>Students:</b> first transformer you can hold in your head — train it on a laptop GPU in ~1 min, watch memorization vs understanding split in real time.<br><b>Interview prep:</b> explain attention, weight decay, Fourier features, and ablations with live plots instead of slogans.<br><b>Researchers:</b> a 60-second fruit-fly for grokking hypotheses (priors, topology, FSD precursors, outlier breakdown) with JSON histories to mine.<br><b>Teachers:</b> assign "change + to −; predict the grok epoch" (answer: needs ~2× data; symmetry matters) or "find the spare 4th speed".<br><b>Teams evaluating generalization:</b> copy the keep/remove ablation pattern onto your own embedding tables.<br><b>Skeptics:</b> run the market control — see exactly where the magic stops.</div>
+
+<h2 id="try"><span class="e">🚀</span>Try it (copy-paste, verified)</h2>
+<pre>pip install -r requirements.txt
+python3 -m src.task          # 12769 problems, 3830 train / 8939 test
+python3 -m pytest tests/ -q # 3 passed
+python3 -m src.train --epochs 6000 --wd 1.0 --frac 0.3 --seed 0 --out results/demo.json
+python3 -m src.realdata      # market control (labels its source: live or fallback)
+docker compose up --build grokking-cpu   # full repro, no local env needed</pre>
+<div class="note"><b>Enable the website version of this repo (GitHub Pages, 2026):</b> push this repo → GitHub → <b>Settings → Pages → Deploy from a branch → branch <code>main</code> → folder <code>/docs</code> → Save</b>. Your site appears at <code>https://&lt;you&gt;.github.io/&lt;repo&gt;/preview.html</code>. That is this page — share that link and readers get the beautiful version; the README below is the same story in Markdown.</div>
+
+<h2><span class="e">📁</span>Map</h2>
+<pre>src/task.py · src/model.py · src/train.py · src/analysis.py
+src/clock.py · src/sweeps.py · src/realdata.py · src/progress.py
+configs/main.yaml · tests/ · scripts/ · docs/preview.html(+assets,demo.gif/mp4) · results/</pre>
+
+<h2><span class="e">📜</span>License &amp; citation</h2>
+<p>MIT — use it for classes, interviews, papers. If it helps, cite the repo plus Power et al. 2022 (arXiv:2201.02177) and Nanda et al. 2023 (arXiv:2301.05217). Full BibTeX in README + CITATION.cff.</p>
+
+<footer>This page was generated from executed results in <code>results/*.json</code> + model weights — figures by <code>scripts/generate_site_assets.py</code>, animation from the real grokking run. No hand-drawn curves. <a href="../README.md" style="color:#5eead4">Read the Markdown version</a> · <a href="demo.gif" style="color:#5eead4">demo.gif</a> · <a href="demo.mp4" style="color:#5eead4">demo.mp4</a></footer>
+</div>
+</body>
+</html>

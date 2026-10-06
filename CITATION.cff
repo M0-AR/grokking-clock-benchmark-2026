@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: "Grokking the Clock: Delayed Generalization Beyond Memorization on Small Algorithmic Tables"
+version: 1.0.0
+date-released: 2026-10-06
+authors:
+  - name: "Grokking Clock Benchmark Contributors"
+license: MIT
+repository-code: "https://example.invalid/grokking-clock-benchmark-2026"
+keywords: ["grokking", "mechanistic-interpretability", "generalization", "transformers", "reproducibility"]
+preferred-citation:
+  type: software
+  title: "Grokking the Clock benchmark v1.0.0"
+  year: 2026
