@@ -59,10 +59,10 @@ footer{color:var(--mut);font-size:13px;margin-top:50px;border-top:1px solid var(
 <h2 id="watch"><span class="e">▶️</span>Watch: the sudden jump (real training run)</h2>
 <p class="lead">Left: accuracy over time. Right: green = problems answered correctly (starts at the 30% it saw, ends fully green). Made from the actual <code>results/grok_15k.json</code> history — not a cartoon.</p>
 <div class="fig">
-<video controls autoplay muted loop playsinline poster="assets/curve_grok_vs_mem.png" src="demo.mp4"></video>
-<div class="cap">Video: the grokking run (seed 0, 30% data, decay 1). Prefer GIF? <a href="demo.gif" style="color:#5eead4">docs/demo.gif</a> is the same animation. To add your own YouTube walkthrough: upload, then replace this &lt;video&gt; with the YouTube embed — the README shows the one-line snippet.</div>
+<video controls autoplay muted loop playsinline poster="docs/assets/curve_grok_vs_mem.png" src="docs/demo.mp4"></video>
+<div class="cap">Video: the grokking run (seed 0, 30% data, decay 1). Prefer GIF? <a href="docs/demo.gif" style="color:#5eead4">docs/demo.gif</a> is the same animation. To add your own YouTube walkthrough: upload, then replace this &lt;video&gt; with the YouTube embed — the README shows the one-line snippet.</div>
 </div>
-<div class="fig"><img src="demo.gif" alt="Animated grokking demo"><div class="cap">GIF fallback (renders inside GitHub READMEs, where &lt;video&gt; tags are stripped).</div></div>
+<div class="fig"><img src="docs/demo.gif" alt="Animated grokking demo"><div class="cap">GIF fallback (renders inside GitHub READMEs, where &lt;video&gt; tags are stripped).</div></div>
 
 <h2><span class="e">🌱</span>Beginner guide — read this and you are dangerous</h2>
 <p class="lead">You will know more than most interview candidates. Let's work this out in a step-by-step way to be sure we have the right answer.</p>
@@ -75,10 +75,10 @@ footer{color:var(--mut);font-size:13px;margin-top:50px;border-top:1px solid var(
 <div class="step"><b>7 · Open it up.</b> A column of the embedding table, top to bottom: memorizer = noise; grokker = smooth waves. Four wave-speeds hold 92%. Cosine+sine of one speed = a circle. Adding on a circle is just turning — wrapping costs nothing. The last table reads answers by "turn back by c; biggest cosine wins". Delete the 4 waves → 1% (blind). Keep only them → 99.7%. That's understanding, verified.</div>
 
 <h2><span class="e">📊</span>Evidence (every number runs)</h2>
-<div class="fig"><img src="assets/curve_grok_vs_mem.png" alt="train and test curves"><div class="cap">Both nets memorize fast. Only decay generalizes — late and suddenly. (results/grok_15k.json vs mem_only.json)</div></div>
-<div class="fig"><img src="assets/fourier_grok_vs_mem.png" alt="fourier shares"><div class="cap">Embedding spectra: 4 speeds dominate the grokker; the memorizer is flat noise.</div></div>
-<div class="fig"><img src="assets/circle_speed.png" alt="clock circle"><div class="cap">One cosine+sine pair → all 113 tokens in order, evenly spaced. A self-built clock face (speed 5 in seed 0; other seeds pick other speeds — always 3–5 of them).</div></div>
-<div class="fig"><img src="assets/sweep_bars.png" alt="data sweep"><div class="cap">More data → much sooner: 25%→12k, 30%→7k, 40%→4.1k, 50%→1.4k epochs to 99% test.</div></div>
+<div class="fig"><img src="docs/assets/curve_grok_vs_mem.png" alt="train and test curves"><div class="cap">Both nets memorize fast. Only decay generalizes — late and suddenly. (results/grok_15k.json vs mem_only.json)</div></div>
+<div class="fig"><img src="docs/assets/fourier_grok_vs_mem.png" alt="fourier shares"><div class="cap">Embedding spectra: 4 speeds dominate the grokker; the memorizer is flat noise.</div></div>
+<div class="fig"><img src="docs/assets/circle_speed.png" alt="clock circle"><div class="cap">One cosine+sine pair → all 113 tokens in order, evenly spaced. A self-built clock face (speed 5 in seed 0; other seeds pick other speeds — always 3–5 of them).</div></div>
+<div class="fig"><img src="docs/assets/sweep_bars.png" alt="data sweep"><div class="cap">More data → much sooner: 25%→12k, 30%→7k, 40%→4.1k, 50%→1.4k epochs to 99% test.</div></div>
 
 <table>
 <tr><th>Experiment</th><th>Setting</th><th>Result</th></tr>
@@ -124,7 +124,7 @@ configs/main.yaml · tests/ · scripts/ · docs/preview.html(+assets,demo.gif/mp
 <h2><span class="e">📜</span>License &amp; citation</h2>
 <p>MIT — use it for classes, interviews, papers. If it helps, cite the repo plus Power et al. 2022 (arXiv:2201.02177) and Nanda et al. 2023 (arXiv:2301.05217). Full BibTeX in README + CITATION.cff.</p>
 
-<footer>This page was generated from executed results in <code>results/*.json</code> + model weights — figures by <code>scripts/generate_site_assets.py</code>, animation from the real grokking run. No hand-drawn curves. <a href="../README.md" style="color:#5eead4">Read the Markdown version</a> · <a href="demo.gif" style="color:#5eead4">demo.gif</a> · <a href="demo.mp4" style="color:#5eead4">demo.mp4</a></footer>
+<footer>This page was generated from executed results in <code>results/*.json</code> + model weights — figures by <code>scripts/generate_site_assets.py</code>, animation from the real grokking run. No hand-drawn curves. <a href="README.md" style="color:#5eead4">Read the Markdown version</a> · <a href="docs/demo.gif" style="color:#5eead4">demo.gif</a> · <a href="docs/demo.mp4" style="color:#5eead4">demo.mp4</a></footer>
 </div>
 </body>
 </html>

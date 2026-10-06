@@ -4,7 +4,7 @@
 
 ![MIT](https://img.shields.io/badge/license-MIT-blue) ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red) ![Docker](https://img.shields.io/badge/docker-cpu%2Bgpu-blue) ![Tests](https://img.shields.io/badge/tests-3_passed-brightgreen) ![Reproducible](https://img.shields.io/badge/every_number-runs-green)
 
-📖 **Beautiful web version:** push this repo to GitHub → *Settings → Pages → Deploy from a branch → `main` → `/docs`* → open `https://<you>.github.io/<repo>/preview.html` (that page is `docs/preview.html` in this repo).
+📖 **Beautiful web version:** https://m0-ar.github.io/grokking-clock-benchmark-2026/preview.html (same story as below, styled for sharing — that page is `docs/preview.html` in this repo).
 
 ---
 
@@ -175,11 +175,18 @@ docs/PAPER.md      full paper-style writeup
 
 ## 🌐 GitHub Pages — share the beautiful version
 
-1. Push this repo to GitHub.
-2. Open **Settings → Pages → Deploy from a branch → branch `main` → folder `/docs` → Save**.
-3. Open `https://<your-username>.github.io/<repo-name>/preview.html`.
+Live site: **https://m0-ar.github.io/grokking-clock-benchmark-2026/preview.html**
 
-That URL is the file `docs/preview.html` in this repo (same story as here, styled for sharing). The `.nojekyll` file keeps asset paths exact.
+Setup (owner, one time): **Settings → Pages → Deploy from a branch → branch `main` → folder `/docs` (recommended) → Save**. Wait 1–2 min for the "pages build and deployment" run, then open the link above.
+
+The repo also ships root mirrors (`preview.html`, `index.html`, `.nojekyll`), so the site resolves under either source setting:
+
+| Pages source | `/` | `/preview.html` | `/docs/preview.html` |
+|---|---|---|---|
+| `/docs` (recommended) | ✅ redirect | ✅ page | 404 (expected — paths mirror the source) |
+| `/` (root) | ✅ redirect | ✅ page | ✅ page |
+
+That URL is the file `docs/preview.html` in this repo (same story as here, styled for sharing). The `.nojekyll` files keep asset paths exact.
 
 ---
 
